@@ -6,12 +6,15 @@ import { useUser } from 'context/auth';
 import { kontenbase } from 'lib/client';
 import { useQuery } from 'react-query';
 import { useState } from 'react';
+import useNotif from 'hooks/notif';
 import ConfirmModal from './ConfirmModal';
 
 export default function RewardList() {
   const [open, setOpen] = useState();
   const [selected, setSelected] = useState();
   const { user, setUser } = useUser();
+
+  const notif = useNotif();
 
   const { data, isLoading } = useQuery('rewards', async () => {
     const { data } = await kontenbase.service('Rewards').find();
@@ -30,10 +33,13 @@ export default function RewardList() {
   const handleRedeem = async () => {
     if (user.point < selected.point) {
       handleClose();
+      notif.error('Poin kamu tidak cukup!');
       return;
     }
     await kontenbase.auth.update({ point: user.point - selected.point });
     setUser({ ...user, point: user.point - selected.point });
+    handleClose();
+    notif.success('Selamat! Poin kamu berhasil ditukarkan.');
   };
 
   return (

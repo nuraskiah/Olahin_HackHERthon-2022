@@ -24,7 +24,12 @@ export default function WasteList() {
       >
         {!isLoading &&
           data.map((cat) => (
-            <Item key={cat._id} name={cat.name} _key={cat.key} />
+            <Item
+              key={cat._id}
+              icon={cat.icon[0].url}
+              name={cat.name}
+              _key={cat.key}
+            />
           ))}
       </Box>
     </MainLayout>

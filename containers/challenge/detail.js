@@ -4,6 +4,7 @@ import { useUser } from 'context/auth';
 import { kontenbase } from 'lib/client';
 import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
+import useNotif from 'hooks/notif';
 
 export default function ChallengeDetail({ id }) {
   const { data, isLoading } = useQuery('challenge', async () => {
@@ -13,10 +14,12 @@ export default function ChallengeDetail({ id }) {
 
   const { user, setUser } = useUser();
   const router = useRouter();
+  const notif = useNotif();
 
   const handleComplete = async () => {
     await kontenbase.auth.update({ point: user.point + data.point });
     setUser({ ...user, point: user.point + data.point });
+    notif.success('Challenge berhasil diselesaikan.');
     router.push('/');
   };
 
@@ -26,13 +29,29 @@ export default function ChallengeDetail({ id }) {
         <p>Loading...</p>
       ) : (
         <>
-          <Typography>{data.name}</Typography>
-          <Typography>{`+${data.point} pts`}</Typography>
+          <Typography variant="h5" fontWeight="bold">
+            {data.name}
+          </Typography>
+          <Typography
+            variant="h6"
+            sx={{ color: 'secondary.main' }}
+          >{`+${data.point} pts`}</Typography>
 
-          <Typography>Tentang Challenge Ini</Typography>
+          <Typography variant="h6" sx={{ mt: 3 }}>
+            Tentang Challenge Ini
+          </Typography>
           <Typography>{data.description}</Typography>
 
-          <Button fullWidth varian="contained" onClick={handleComplete}>
+          <Button
+            fullWidth
+            varian="contained"
+            onClick={handleComplete}
+            sx={{
+              backgroundColor: 'primary.main',
+              color: 'white',
+              mt: 5,
+            }}
+          >
             Selesaikan challenge
           </Button>
         </>

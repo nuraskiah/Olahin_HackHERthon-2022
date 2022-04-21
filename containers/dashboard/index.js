@@ -159,7 +159,7 @@ export default function Dashboard() {
             }}
           >
             <Box>
-              <Typography fontWeight="bold">Air Quality Index</Typography>
+              <Typography fontWeight="bold">Indeks Kualitas Udara</Typography>
               <Typography variant="body2" marginBottom={1}>
                 Medan, Sumatera Utara
               </Typography>
@@ -168,7 +168,7 @@ export default function Dashboard() {
                 fontSize="0.7rem"
                 lineHeight={'1rem'}
               >
-                Air quality is good. A perfect day for a walk!
+                Udaranya hari ini bagus. Sangat sempurna untuk jalan kaki!
               </Typography>
             </Box>
             <Box
@@ -181,12 +181,12 @@ export default function Dashboard() {
               <Typography
                 variant="h6"
                 lineHeight={'1rem'}
-                sx={{ color: 'secondary.main' }}
+                sx={{ color: 'success.dark' }}
               >
-                100
+                78
               </Typography>
-              <Typography variant="caption" sx={{ color: 'secondary.main' }}>
-                poor
+              <Typography variant="caption" sx={{ color: 'success.dark' }}>
+                good
               </Typography>
             </Box>
           </Paper>

@@ -1,6 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { SnackbarProvider } from 'notistack';
 import { UserProvider } from 'context/auth';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
@@ -33,9 +34,15 @@ function MyApp({ Component, pageProps }) {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <QueryClientProvider client={queryClient}>
-          <UserProvider>
-            <Component {...pageProps} />
-          </UserProvider>
+          <SnackbarProvider
+            maxSnack={3}
+            autoHideDuration={3000}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          >
+            <UserProvider>
+              <Component {...pageProps} />
+            </UserProvider>
+          </SnackbarProvider>
         </QueryClientProvider>
       </ThemeProvider>
     </React.Fragment>
