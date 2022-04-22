@@ -9,7 +9,6 @@ export function useUser() {
 export function UserProvider(props) {
   // state
   const [user, setUser] = useState({});
-  const [token, setToken] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const { children } = props;
@@ -18,8 +17,6 @@ export function UserProvider(props) {
       value={{
         user,
         setUser,
-        token,
-        setToken,
         isLoggedIn,
         setIsLoggedIn,
       }}

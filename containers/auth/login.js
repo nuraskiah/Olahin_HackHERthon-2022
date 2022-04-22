@@ -17,7 +17,7 @@ export default function Login() {
         password: 'meow123',
       });
 
-      Cookies.set('token', data.accessToken, { expires: 30 });
+      Cookies.set('token', data.token, { expires: 30 });
       localStorage.setItem('token', data.token);
 
       router.push('/');

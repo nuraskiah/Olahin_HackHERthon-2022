@@ -9,16 +9,18 @@ export default function withAuth(Component) {
   const Auth = (props) => {
     // Login data added to props via redux-store (or use react context for example)
     const [initializing, setInitializing] = React.useState(false);
-    const { setUser, setToken, isLoggedIn, setIsLoggedIn } = useUser();
+    const { setUser, isLoggedIn, setIsLoggedIn } = useUser();
 
     React.useEffect(() => {
       const func = async () => {
         if (initializing) {
           try {
-            const token = getCookie({}, 'token');
-            const data = await kontenbase.auth.user();
-            setUser(data.user);
-            setToken(data, token);
+            const { user, error } = await kontenbase.auth.user();
+            if (error) {
+              return Router.replace('/login');
+            }
+
+            setUser(user);
             setIsLoggedIn(true);
             setInitializing(false);
           } catch (error) {

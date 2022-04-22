@@ -7,10 +7,13 @@ export default Login;
 
 export const getServerSideProps = async (context) => {
   try {
-    const token = getCookie(context.req, 'token');
+    // const token = getCookie(context.req, 'token');
 
-    setToken(token);
-    const data = await kontenbase.auth.user();
+    // setToken(token);
+    const { user, error } = await kontenbase.auth.user();
+    if (error) {
+      return { props: { user: null } };
+    }
 
     return {
       redirect: {
@@ -18,7 +21,7 @@ export const getServerSideProps = async (context) => {
         permanent: false,
       },
       props: {
-        user: data.user,
+        user,
       },
     };
   } catch (error) {
