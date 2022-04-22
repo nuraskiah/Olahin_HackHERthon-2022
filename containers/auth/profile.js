@@ -1,11 +1,18 @@
-import { Avatar, Box, Container, Divider, Typography } from '@mui/material';
-import DetailLayout from 'components/DetailLayout';
+import { Avatar, Box, Container, Button, Typography } from '@mui/material';
 import TopBar from 'components/TopBar';
 import { useUser } from 'context/auth';
+import { kontenbase } from 'lib/client';
+import { useRouter } from 'next/router';
 
 export default function Profile() {
   const { user } = useUser();
+  const router = useRouter();
   const size = 150;
+
+  const handleLogout = async () => {
+    await kontenbase.auth.logout();
+    router.push('/login');
+  };
 
   return (
     <Box style={{ minHeight: '100vh', position: 'relative' }}>
@@ -38,6 +45,11 @@ export default function Profile() {
         <Box>
           <Data title="Email" value={user.email} />
           <Data title="Point" value={user.point || 0} />
+        </Box>
+        <Box sx={{ justifyContent: 'center', display: 'flex' }}>
+          <Button variant="outlined" onClick={handleLogout}>
+            Logout
+          </Button>
         </Box>
       </Container>
     </Box>
